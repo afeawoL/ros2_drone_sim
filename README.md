@@ -1,6 +1,6 @@
 # ROS2 Drone Simulation Environment
 
-A reproducible ROS2 Humble development environment for drone simulation.
+A reproducible ROS2 Humble development environment for drone simulation with GUI support.
 
 ## Repository Structure
 
@@ -11,6 +11,7 @@ A reproducible ROS2 Humble development environment for drone simulation.
 ├── src/
 │   └── README.md          # Information about ROS2 packages
 ├── docker-compose.yml     # Docker Compose configuration
+├── setup_x11.sh           # X11 forwarding setup script
 ├── .gitignore             # Git ignore rules
 ├── LICENSE                # MIT License
 ├── SETUP.md               # Detailed setup instructions
@@ -25,18 +26,27 @@ A reproducible ROS2 Humble development environment for drone simulation.
    cd ros2_drone_sim
    ```
 
-2. Build and start the environment:
+2. Set up X11 forwarding (required for GUI applications):
+   ```bash
+   ./setup_x11.sh
+   ```
+
+3. Build and start the environment:
    ```bash
    docker-compose build
    docker-compose up -d
    ```
 
-3. Enter the container:
+4. Enter the container:
    ```bash
    docker-compose exec ros2_drone_sim bash
    ```
 
-4. Inside the container, your ROS2 workspace is at `/root/ros2_ws` with the `src` directory mounted from your host.
+5. Test GUI applications (inside container):
+   ```bash
+   # Run RViz2 to test GUI
+   rviz2
+   ```
 
 ## Development Workflow
 
@@ -48,7 +58,15 @@ A reproducible ROS2 Humble development environment for drone simulation.
    source install/setup.bash
    ```
 
-3. Run your simulation nodes
+3. Run your simulation nodes and visualization tools
+
+## X11 Forwarding Notes
+
+- The setup script (`setup_x11.sh`) configures X11 forwarding for GUI applications
+- If you encounter display issues:
+  1. Make sure X11 is running on your host
+  2. Run `./setup_x11.sh` again
+  3. Restart the container: `docker-compose restart`
 
 ## Documentation
 
