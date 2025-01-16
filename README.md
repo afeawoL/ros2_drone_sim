@@ -33,13 +33,13 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
 
 3. Build and start the environment:
    ```bash
-   docker-compose build
-   docker-compose up -d
+   docker compose build
+   docker compose up -d
    ```
 
 4. Enter the docker container:
    ```bash
-   docker-compose exec ros2_drone_sim bash
+   docker compose exec ros2_drone_sim bash
    ```
 
 5. Run rviz to test X11 fowarding:
@@ -49,7 +49,7 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
 
    If rviz fails to run, run test_gui.sh to verify that X11 forwarding is active:
    ```bash
-   docker-compose up -d && docker-compose exec ros2_drone_sim /root/ros2_ws/scripts/test_gui.sh
+   docker compose up -d && docker compose exec ros2_drone_sim /root/ros2_ws/scripts/test_gui.sh
    ```
 
 ## X11 Forwarding Notes
@@ -57,7 +57,7 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
 - The setup script (`setup_x11.sh`) configures X11 forwarding for GUI applications
 - If you encounter display issues:
   1. Make sure X11 is running on your host by running: `./setup_x11.sh)`
-  2. Restart the container: `docker-compose restart`
+  2. Restart the container: `docker compose restart`
      
 ## Developing ROS Packages
 
