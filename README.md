@@ -1,6 +1,6 @@
 # ROS2 Drone Simulation Environment
 
-A reproducible ROS2 Humble development environment for drone simulation with GUI support.
+A Docker w/ a ROS2 Humble development environment for drone simulation with X11 forwarding.
 
 ## Repository Structure
 
@@ -37,12 +37,12 @@ A reproducible ROS2 Humble development environment for drone simulation with GUI
    docker-compose up -d
    ```
 
-4. Enter the container:
+4. Enter the docker container:
    ```bash
    docker-compose exec ros2_drone_sim bash
    ```
 
-5. Test GUI applications (inside container):
+5. Test GUI applications (inside docker container):
    ```bash
    # Run RViz2 to test GUI
    rviz2
@@ -70,17 +70,4 @@ A reproducible ROS2 Humble development environment for drone simulation with GUI
 
 ## Documentation
 
-For detailed setup and usage instructions, see the [Setup Instructions](SETUP.md).
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
+For detailed setup instructions read [Setup Instructions](SETUP.md).
