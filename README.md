@@ -12,17 +12,17 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
 │   └── README.md          # Information about ROS2 packages
 ├── docker-compose.yml     # Docker Compose configuration
 ├── setup_x11.sh           # X11 forwarding setup script
-├── .gitignore             # Git ignore rules
+├── README.md              # Main documentation             
 ├── LICENSE                # MIT License
-├── SETUP.md               # Detailed setup instructions
-└── README.md              # Main documentation
+└── .gitignore
+
 ```
 
 ## Quick Start
 
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/afeawoL/ros2_drone_sim/
    cd ros2_drone_sim
    ```
 
@@ -42,13 +42,24 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
    docker-compose exec ros2_drone_sim bash
    ```
 
-5. Test GUI applications (inside docker container):
+5. Run rviz to test X11 fowarding:
    ```bash
-   # Run RViz2 to test GUI
    rviz2
    ```
 
-## Development Workflow
+   If rviz fails to run, run test_gui.sh to verify that X11 forwarding is active:
+   ```bash
+   docker-compose up -d && docker-compose exec ros2_drone_sim /root/ros2_ws/scripts/test_gui.sh
+   ```
+
+## X11 Forwarding Notes
+
+- The setup script (`setup_x11.sh`) configures X11 forwarding for GUI applications
+- If you encounter display issues:
+  1. Make sure X11 is running on your host by running: `./setup_x11.sh)`
+  2. Restart the container: `docker-compose restart`
+     
+## Developing ROS Packages
 
 1. Create or modify ROS2 packages in the `src` directory
 2. Build packages inside the container:
@@ -58,16 +69,4 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
    source install/setup.bash
    ```
 
-3. Run your simulation nodes and visualization tools
 
-## X11 Forwarding Notes
-
-- The setup script (`setup_x11.sh`) configures X11 forwarding for GUI applications
-- If you encounter display issues:
-  1. Make sure X11 is running on your host
-  2. Run `./setup_x11.sh` again
-  3. Restart the container: `docker-compose restart`
-
-## Documentation
-
-For detailed setup instructions read [Setup Instructions](SETUP.md).
