@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot name="simple_drone" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.2" length="0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 0.8"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Four arms -->
+  <xacro:macro name="arm" params="name angle">
+    <link name="${name}_arm">
+      <visual>
+        <geometry>
+          <box size="0.5 0.05 0.05"/>
+        </geometry>
+        <origin xyz="0.25 0 0" rpy="0 0 0"/>
+        <material name="grey">
+          <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="${name}_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${name}_arm"/>
+      <origin xyz="0 0 0" rpy="0 0 ${angle}"/>
+    </joint>
+
+    <link name="${name}_rotor">
+      <visual>
+        <geometry>
+          <cylinder radius="0.1" length="0.05"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 0.8"/>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="${name}_rotor_joint" type="fixed">
+      <parent link="${name}_arm"/>
+      <child link="${name}_rotor"/>
+      <origin xyz="0.5 0 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:arm name="front_right" angle="0.785398"/>    <!-- 45 degrees -->
+  <xacro:arm name="front_left" angle="2.356194"/>     <!-- 135 degrees -->
+  <xacro:arm name="back_left" angle="-2.356194"/>     <!-- -135 degrees -->
+  <xacro:arm name="back_right" angle="-0.785398"/>    <!-- -45 degrees -->
+</robot>
