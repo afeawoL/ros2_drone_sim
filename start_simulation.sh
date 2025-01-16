@@ -4,12 +4,12 @@
 xhost +local:docker
 
 # Build and start the container
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 
 # Enter the container and run the simulation
 echo "Starting drone simulation..."
-docker-compose exec ros2_drone_sim bash -c "
+docker compose exec ros2_drone_sim bash -c "
     source /opt/ros/humble/setup.bash && \
     cd /root/ros2_ws && \
     colcon build && \
