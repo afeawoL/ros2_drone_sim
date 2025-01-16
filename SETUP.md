@@ -64,3 +64,28 @@ For detailed setup and usage instructions, see the [Setup Instructions](SETUP.md
 
 This project is licensed under the MIT License - see the LICENSE file for details
 
+
+## Testing GUI Applications
+
+After setting up the environment, you can verify that GUI applications are working correctly:
+
+1. Start the container:
+   ```bash
+   docker-compose up -d
+   ```
+
+2. Run the test script:
+   ```bash
+   docker-compose exec ros2_drone_sim /root/ros2_ws/scripts/test_gui.sh
+   ```
+
+The test script will check:
+- Basic X11 forwarding with xeyes
+- OpenGL support with glxgears
+- ROS2 GUI with RViz2
+
+If any tests fail, ensure:
+1. X11 forwarding is properly set up (run ./setup_x11.sh)
+2. Your host system supports the required graphics capabilities
+3. The container has been rebuilt with latest changes
+

@@ -6,7 +6,6 @@ services:
       dockerfile: docker/Dockerfile
     image: ros2_drone_sim:latest
     container_name: ros2_drone_sim
-    # X11 and network configuration
     network_mode: host
     environment:
       - DISPLAY=${DISPLAY}
@@ -15,9 +14,8 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - ./src:/root/ros2_ws/src
+      - ./scripts:/root/ros2_ws/scripts
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${HOME}/.Xauthority:/root/.Xauthority:ro
-    # Security for X11
     privileged: true
-    # Keep container running
     command: bash
