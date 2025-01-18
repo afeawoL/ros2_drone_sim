@@ -1,0 +1,8 @@
+# Initial setup
+./setup_x11.sh
+
+# Start the simulation
+./start.sh
+
+# To connect to running container
+./connect.sh
