@@ -1,6 +1,30 @@
 # ROS2 Drone Simulation Environment
 
-A Docker w/ a ROS2 Humble development environment for drone simulation with X11 forwarding.
+A containerized ROS2 Humble development environment for drone simulation with X11 forwarding.
+
+## Quick Start (Recommended)
+
+1. Clone this repository:
+```bash
+git clone https://github.com/afeawoL/ros2_drone_sim/
+cd ros2_drone_sim
+```
+
+2. Make the start script executable:
+```bash
+chmod +x start.sh
+```
+
+3. Run the simulation:
+```bash
+./start.sh
+```
+
+The start script will automatically:
+- Enable X11 forwarding
+- Start the Docker container
+- Build the ROS2 packages
+- Launch the drone simulation with visualization
 
 ## Repository Structure
 
@@ -18,39 +42,28 @@ A Docker w/ a ROS2 Humble development environment for drone simulation with X11 
 
 ```
 
-## Quick Start
+## Manual Setup (Alternative)
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/afeawoL/ros2_drone_sim/
-   cd ros2_drone_sim
-   ```
+If you need more control over the setup process:
 
-2. Set up X11 forwarding (required for GUI applications):
-   ```bash
-   ./setup_x11.sh
-   ```
+1. Start the Docker container:
+```bash
+docker compose build
+docker compose up -d
+```
 
-3. Build and start the environment:
-   ```bash
-   docker-compose build
-   docker-compose up -d
-   ```
+2. Enter the container:
+```bash
+docker compose exec ros2_drone_sim bash
+```
 
-4. Enter the docker container:
-   ```bash
-   docker-compose exec ros2_drone_sim bash
-   ```
-
-5. Run rviz to test X11 fowarding:
-   ```bash
-   rviz2
-   ```
-
-   If rviz fails to run, run test_gui.sh to verify that X11 forwarding is active:
-   ```bash
-   docker-compose up -d && docker-compose exec ros2_drone_sim /root/ros2_ws/scripts/test_gui.sh
-   ```
+3. Inside the container, build and run:
+```bash
+cd /root/ros2_ws
+colcon build --packages-select simple_drone_sim
+source install/setup.bash
+ros2 launch simple_drone_sim display.launch.py
+```
 
 ## X11 Forwarding Notes
 

@@ -1,28 +1,82 @@
 <?xml version="1.0"?>
 <robot name="simple_drone" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <link name="base_link">
-    <visual>
-      <geometry>
-        <cylinder radius="0.2" length="0.1"/>
-      </geometry>
-      <material name="blue">
-        <color rgba="0 0 1 0.8"/>
-      </material>
-    </visual>
-  </link>
+<xacro:property name="PI" value="3.1415926535897931"/>
+
+<!-- Constants for physics properties -->
+<xacro:property name="body_mass" value="1.5"/>
+<xacro:property name="arm_mass" value="0.2"/>
+<xacro:property name="rotor_mass" value="0.1"/>
+
+<!-- Materials -->
+<gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+</gazebo>
+
+<!-- World link -->
+<link name="world"/>
+<!-- Fixed joint connecting world to base_link -->
+<joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
+<link name="base_link">
+<inertial>
+    <mass value="${body_mass}"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia 
+        ixx="${body_mass * 0.02}" 
+        ixy="0.0" 
+        ixz="0.0" 
+        iyy="${body_mass * 0.02}" 
+        iyz="0.0" 
+        izz="${body_mass * 0.04}"/>
+</inertial>
+<visual>
+    <geometry>
+    <cylinder radius="0.2" length="0.1"/>
+    </geometry>
+    <material name="blue">
+    <color rgba="0 0 1 0.8"/>
+    </material>
+</visual>
+<collision>
+    <geometry>
+    <cylinder radius="0.2" length="0.1"/>
+    </geometry>
+</collision>
+</link>
 
   <!-- Four arms -->
-  <xacro:macro name="arm" params="name angle">
-    <link name="${name}_arm">
-      <visual>
+<!-- Arm and rotor assembly macro -->
+<xacro:macro name="arm" params="name angle">
+<link name="${name}_arm">
+<inertial>
+    <mass value="${arm_mass}"/>
+    <origin xyz="0.25 0 0" rpy="0 0 0"/>
+    <inertia 
+        ixx="${arm_mass * 0.02}" 
+        ixy="0.0" 
+        ixz="0.0" 
+        iyy="${arm_mass * 0.0833}" 
+        iyz="0.0" 
+        izz="${arm_mass * 0.0833}"/>
+    <visual>
         <geometry>
-          <box size="0.5 0.05 0.05"/>
+        <box size="0.5 0.05 0.05"/>
         </geometry>
         <origin xyz="0.25 0 0" rpy="0 0 0"/>
         <material name="grey">
-          <color rgba="0.5 0.5 0.5 1"/>
+        <color rgba="0.5 0.5 0.5 1"/>
         </material>
-      </visual>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="0.5 0.05 0.05"/>
+        </geometry>
+        <origin xyz="0.25 0 0" rpy="0 0 0"/>
+    </collision>
     </link>
 
     <joint name="${name}_joint" type="fixed">
@@ -32,21 +86,52 @@
     </joint>
 
     <link name="${name}_rotor">
-      <visual>
+    <inertial>
+        <mass value="${rotor_mass}"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia 
+            ixx="${rotor_mass * 0.001}" 
+            ixy="0.0" 
+            ixz="0.0" 
+            iyy="${rotor_mass * 0.001}" 
+            iyz="0.0" 
+            izz="${rotor_mass * 0.002}"/>
+    </inertial>
+    <visual>
         <geometry>
-          <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.1" length="0.05"/>
         </geometry>
         <material name="red">
-          <color rgba="1 0 0 0.8"/>
+        <color rgba="1 0 0 0.8"/>
         </material>
-      </visual>
+    </visual>
+    <collision>
+        <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+        </geometry>
+    </collision>
     </link>
 
-    <joint name="${name}_rotor_joint" type="fixed">
-      <parent link="${name}_arm"/>
-      <child link="${name}_rotor"/>
-      <origin xyz="0.5 0 0" rpy="0 0 0"/>
+    <joint name="${name}_rotor_joint" type="continuous">
+    <parent link="${name}_arm"/>
+    <child link="${name}_rotor"/>
+    <origin xyz="0.5 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="15" velocity="50"/>
+    <dynamics damping="0.05" friction="0.05"/>
     </joint>
+
+    <gazebo reference="${name}_rotor">
+    <material>Gazebo/Red</material>
+    </gazebo>
+
+    <gazebo reference="${name}_rotor_joint">
+    <physics type="ode">
+        <provide_feedback>true</provide_feedback>
+        <implicit_spring_damper>true</implicit_spring_damper>
+        <cfm_damping>true</cfm_damping>
+    </physics>
+    </gazebo>
   </xacro:macro>
 
   <xacro:arm name="front_right" angle="0.785398"/>    <!-- 45 degrees -->

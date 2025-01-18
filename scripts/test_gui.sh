@@ -5,7 +5,23 @@ GREEN="[0;32m"
 RED="[0;31m"
 NC="[0m"
 
-echo "Starting X11 and ROS2 GUI test..."
+# Check for required packages
+packages=("xeyes" "glxgears" "rviz2")
+missing=()
+
+for pkg in "${packages[@]}"; do
+    if ! command -v $pkg >/dev/null 2>&1; then
+        missing+=($pkg)
+    fi
+done
+
+if [ ${#missing[@]} -ne 0 ]; then
+    echo -e "${RED}Error: Missing required packages: ${missing[*]}${NC}"
+    echo "Please install the missing packages and try again"
+    exit 1
+fi
+
+echo -e "${GREEN}Starting X11 and ROS2 GUI tests...${NC}"
 
 # Test 1: Basic X11
 echo -n "Testing basic X11 forwarding with xeyes... "
@@ -13,8 +29,11 @@ if timeout 5 xeyes >/dev/null 2>&1; then
     echo -e "${GREEN}OK${NC}"
 else
     echo -e "${RED}FAILED${NC}"
-    echo "Please check X11 setup with ./setup_x11.sh"
-fi
+    echo -e "${RED}Please check:${NC}"
+    echo " - X11 is running (run 'xhost' to verify)"
+    echo " - DISPLAY variable is set correctly (current: $DISPLAY)"
+    echo " - setup_x11.sh has been run successfully"
+    fi
 
 # Test 2: OpenGL
 echo -n "Testing OpenGL support with glxgears... "

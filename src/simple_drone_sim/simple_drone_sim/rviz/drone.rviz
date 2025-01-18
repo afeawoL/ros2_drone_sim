@@ -10,25 +10,25 @@ Panels:
     Tree Height: 555
 Visualization Manager:
   Class: ""
-  Displays:
-    - Alpha: 0.5
-      Cell Size: 1
-      Class: rviz_default_plugins/Grid
-      Color: 160; 160; 164
-      Enabled: true
-      Line Style:
-        Line Width: 0.029999999329447746
-        Value: Lines
-      Name: Grid
-      Normal Cell Count: 0
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Plane: XY
-      Plane Cell Count: 10
-      Reference Frame: <Fixed Frame>
-      Value: true
+Displays:
+- Alpha: 0.5
+    Cell Size: 1
+    Class: rviz_default_plugins/Grid
+    Color: 160; 160; 164
+    Enabled: true
+    Line Style:
+    Line Width: 0.029999999329447746
+    Value: Lines
+    Name: Grid
+    Normal Cell Count: 0
+    Offset:
+    X: 0
+    Y: 0
+    Z: 0
+    Plane: XY
+    Plane Cell Count: 20
+    Reference Frame: world
+    Value: true
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
@@ -51,9 +51,69 @@ Visualization Manager:
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: true
-      Visual Enabled: true
-  Enabled: true
+    Value: true
+    Visual Enabled: true
+- Class: rviz_default_plugins/TF
+    Enabled: true
+    Frame Timeout: 15
+    Frames:
+    All Enabled: true
+    Marker Scale: 0.5
+    Name: TF
+    Show Arrows: true
+    Show Axes: true
+    Show Names: true
+    Update Interval: 0
+    Value: true
+- Angle Tolerance: 0.1
+    Class: rviz_default_plugins/Odometry
+    Enabled: true
+    Name: Odometry
+    Position Tolerance: 0.1
+    Shape:
+    Alpha: 1
+    Axes Length: 1
+    Axes Radius: 0.1
+    Color: 255; 25; 0
+    Head Length: 0.3
+    Head Radius: 0.1
+    Shaft Length: 1
+    Shaft Radius: 0.05
+    Value: Arrow
+    Topic:
+    Depth: 5
+    Durability Policy: Volatile
+    History Policy: Keep Last
+    Reliability Policy: Reliable
+    Value: /odom
+    Value: true
+- Class: rviz_default_plugins/InteractiveMarkers
+    Enable Transparency: true
+    Enabled: true
+    Name: InteractiveMarkers
+    Show Axes: false
+    Show Descriptions: true
+    Show Visual Aids: false
+    Update Topic:
+    Depth: 5
+    Durability Policy: Volatile
+    History Policy: Keep Last
+    Reliability Policy: Reliable
+    Value: /drone_control_marker/update
+    Value: true
+- Class: rviz_default_plugins/Marker
+    Enabled: true
+    Name: VelocityMarker
+    Namespaces:
+    {}
+    Topic:
+    Depth: 5
+    Durability Policy: Volatile
+    History Policy: Keep Last
+    Reliability Policy: Reliable
+    Value: /cmd_vel_marker
+    Value: true
+Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Fixed Frame: base_link
@@ -68,8 +128,8 @@ Visualization Manager:
     - Class: rviz_default_plugins/Measure
   Views:
     Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 2
+    Class: rviz_default_plugins/Orbit
+    Distance: 5
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -84,10 +144,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.785398
-      Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 0.785398
+    Pitch: 0.5
+    Target Frame: base_link
+    Value: Orbit (rviz)
+    Yaw: 0.785398
 Window Geometry:
   Displays:
     collapsed: false

@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM osrf/ros:humble-desktop
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install -y locales && \
     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
-# Add the ROS2 apt repository
+# Add the ROS2 apt repository with consistent keyring
 RUN apt-get update && apt-get install -y curl gnupg lsb-release && \
-    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros2-latest-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros2-latest-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list
 
 # Install ROS2 Humble and additional tools
 RUN apt-get update && apt-get install -y \
@@ -30,20 +30,13 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-colcon-common-extensions \
     python3-rosdep \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install additional X11 utilities
-RUN apt-get update && apt-get install -y \
     x11-apps \
     mesa-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Initialize rosdep
-RUN rosdep init && \
-    rosdep update
 
 # Create workspace
-RUN mkdir -p /root/ros2_ws/src
+RUN mkdir -p /root/ros2_ws/
 
 # Set working directory
 WORKDIR /root/ros2_ws
@@ -53,3 +46,4 @@ RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 
 # Keep container running
 CMD ["bash"]
+

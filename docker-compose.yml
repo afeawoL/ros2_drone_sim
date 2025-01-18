@@ -7,8 +7,11 @@ services:
     container_name: ros2_drone_sim
     environment:
       - DISPLAY=${DISPLAY}
+      - XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
     volumes:
       - ./src:/root/ros2_ws/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
+      - ~/ros2_drone_sim:/root/ros2_ws
     network_mode: host
+

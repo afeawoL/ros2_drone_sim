@@ -4,15 +4,20 @@
   <name>simple_drone_sim</name>
   <version>0.0.0</version>
   <description>A simple drone simulation package</description>
-  <maintainer email="developer@example.com">Drone Developer</maintainer>
-  <license>TODO: License declaration</license>
+<maintainer email="lafeawo@bowiestate.edu">Drone Developer</maintainer>
+<license>MIT</license>
 
-  <depend>rclpy</depend>
+<depend>rclpy</depend>
+<depend>joint_state_publisher_gui</depend>
   <depend>xacro</depend>
   <depend>rviz2</depend>
-  <depend>robot_state_publisher</depend>
+<depend>robot_state_publisher</depend>
+<depend>geometry_msgs</depend>
+<depend>nav_msgs</depend>
+<depend>tf2_ros</depend>
+<depend>sensor_msgs</depend>
 
-  <test_depend>ament_copyright</test_depend>
+<test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
