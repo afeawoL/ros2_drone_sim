@@ -8,10 +8,10 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
+    working_dir: /root/ros2_ws
     volumes:
-      - ./src:/root/ros2_ws/src
+      - ./src:/root/ros2_ws/src:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
-      - ~/ros2_drone_sim:/root/ros2_ws
     network_mode: host
 
