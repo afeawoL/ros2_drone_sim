@@ -278,7 +278,6 @@ def main(args=None):
         node.destroy_node()
         rclpy.shutdown()
         sys.exit(0)
-
 if __name__ == '__main__':
     main()
 

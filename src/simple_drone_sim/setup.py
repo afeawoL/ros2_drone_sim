@@ -29,12 +29,15 @@ setup(
         'nav_msgs',
         'sensor_msgs',
         'tf2_ros',
-        'rclpy'
+        'rclpy',
+        'joint_state_publisher_gui',
+        'xacro',
+        'robot_state_publisher'
     ],
     zip_safe=False,
     maintainer="Drone Developer",
-    maintainer_email="developer@example.com",
-    description="A simple drone simulation package",
+    maintainer="Drone Developer",
+    maintainer_email="lafeawo@bowiestate.edu",
     license="MIT",
     python_requires='>=3.6',
     tests_require=['pytest'],
